@@ -674,11 +674,10 @@ body::-webkit-scrollbar {
 .title-text .ele h1 {
     position: absolute;
     background-color: var(--bg-primary-color);
-    /* border-radius: 64px; */
     padding: 4px 12px;
     top: 100%;
     left: 0;
-    font-family: "font_5";
+    font-family: "font_6";
     color: black;
     font-weight: 100;
     line-height: .94;
