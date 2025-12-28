@@ -62,7 +62,7 @@ body::-webkit-scrollbar {
 
 @font-face {
     font-family: "font_6";
-    src: url(/assets/fonts/kajiro/Kajiro/);
+    src: url(/assets/fonts/kajiro/Kajiro/Kajiro\ Bold.ttf);
 }
 
 /* Navigation bar start */
@@ -678,7 +678,7 @@ body::-webkit-scrollbar {
     padding: 4px 12px;
     top: 100%;
     left: 0;
-    font-family: "font_6";
+    font-family: "font_5";
     color: black;
     font-weight: 100;
     line-height: .94;
