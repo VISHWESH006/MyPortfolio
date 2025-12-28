@@ -401,11 +401,6 @@ body::-webkit-scrollbar {
     color: var(--bg-primary-color);
     font-weight: 900;
     cursor: pointer;
-    transition: 0.3s ease;
-}
-
-.video-btn:hover{
-    transform: translate(0%, -0.5%);
 }
 
 .About .aboutme {
