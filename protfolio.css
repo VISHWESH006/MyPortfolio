@@ -401,7 +401,11 @@ body::-webkit-scrollbar {
     color: var(--bg-primary-color);
     font-weight: 900;
     cursor: pointer;
+    transition: 0.3s ease;
+}
 
+.video-btn:hover{
+    transform: scale(1.15);
 }
 
 .About .aboutme {
@@ -463,7 +467,7 @@ body::-webkit-scrollbar {
     padding: 5rem 8rem 0rem 8rem;
     font-size: 20px;
     text-align: center;
-    font-family: "font_4";
+    font-family: "font_5";
     font-weight: 540;
     color: var(--text-primary-color);
     line-height: 1.6;
@@ -822,7 +826,7 @@ body::-webkit-scrollbar {
     color: #2A2A29;
     font-size: 20px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.3s ease;
 }
 
 .back-to-top:hover {
