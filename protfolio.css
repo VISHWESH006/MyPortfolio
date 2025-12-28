@@ -405,7 +405,7 @@ body::-webkit-scrollbar {
 }
 
 .video-btn:hover{
-    transform: translate(-2% 0%);
+    transform: translate(-2%, 0%);
 }
 
 .About .aboutme {
