@@ -556,6 +556,12 @@ body::-webkit-scrollbar {
     padding: 22px 0;
 }
 
+.marquee::selection{
+    color: #E0E0DA;
+    background-color: transparent;
+}
+
+
 .track {
     display: flex;
     width: max-content;
