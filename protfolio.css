@@ -14,10 +14,7 @@ body {
 }
 
 :root {
-
-    /*background-color*/
     --bg-primary-color: #E0E0DA;
-    /*Text-color*/
     --text-primary-color: #2A2A29;
 }
 
@@ -33,7 +30,6 @@ body {
 body::-webkit-scrollbar {
     display: none;
 }
-
 
 @font-face {
     font-family: "font_1";
@@ -65,11 +61,12 @@ body::-webkit-scrollbar {
     src: url(/assets/fonts/kajiro/Kajiro/Kajiro\ Bold.ttf);
 }
 
-/* Navigation bar start */
+
+/* Navigation */
 
 .navigation {
     position: absolute;
-    top: 0%;
+    top: 0;
     width: 100%;
     height: 15vh;
     background-color: transparent;
@@ -115,7 +112,7 @@ body::-webkit-scrollbar {
 
 .navigation a {
     text-transform: uppercase;
-    color: rgb(0, 0, 0);
+    color: #000;
     text-decoration: none;
     padding-bottom: 2px;
     border-radius: 1020px;
@@ -132,8 +129,6 @@ body::-webkit-scrollbar {
     left: 0%;
     background-color: #2A2A29;
 }
-
-
 
 .navigation h1:hover::after {
     cursor: pointer;
@@ -158,7 +153,8 @@ body::-webkit-scrollbar {
     }
 }
 
-/* navigation bar ends */
+
+/* Hero  */
 
 .hero {
     width: 100%;
@@ -234,7 +230,6 @@ body::-webkit-scrollbar {
     font-size: clamp(4rem, 8vw, 9rem);
 }
 
-
 .hero .lname::selection {
     background-color: var(--text-primary-color);
     color: var(--bg-primary-color);
@@ -247,7 +242,6 @@ body::-webkit-scrollbar {
     align-items: center;
     flex-direction: row;
     flex-wrap: nowrap;
-    /* justify-content: space-between; */
     position: absolute;
     bottom: 8%;
     left: 6%;
@@ -265,25 +259,7 @@ body::-webkit-scrollbar {
     font-family: "font_4";
     color: var(--text-primary-color);
     font-weight: 200;
-    /* animation-name: inout;
-    animation-duration: 2.5s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    overflow: hidden; */
 }
-
-@keyframes inout {
-    from {
-        width: 100%;
-        left: 0%;
-    }
-
-    to {
-        width: 0%;
-        left: -100%;
-    }
-}
-
 
 .hero .bline {
     width: 460px;
@@ -316,17 +292,8 @@ body::-webkit-scrollbar {
     right: 0%;
 }
 
-.hero .hover-grad {
-    width: 460px;
-    height: 150px;
-    position: absolute;
-    top: 60%;
-    right: 0%;
-    background-image: linear-gradient(45deg, var(--text-primary-color) 25%, transparent 25%, transparent 75%, var(--color2) 75%, var(--color2)),
-        linear-gradient(135deg, var(--bg-primary-color) 25%, var(--color1) 25%, var(--color1) 75%, var(--color2) 75%, var(--color2));
-    background-size: 90px 90px;
-    background-position: 0 0, 135px 135px;
-}
+
+/* Cursor */
 
 #cursor {
     width: clamp(100px, 12vw, 180px);
@@ -357,14 +324,18 @@ body::-webkit-scrollbar {
 }
 
 
+/* Spacer */
+
 .space {
     width: 100%;
     height: 20vh;
     background-color: var(--bg-primary-color);
 }
 
+
+/* About  */
+
 .About {
-    position: relative;
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -382,29 +353,29 @@ body::-webkit-scrollbar {
     object-fit: cover;
     overflow: hidden;
     z-index: -1;
-
 }
 
 .video-btn {
-    width: 8vw;
-    height: 4vw;
+    width: clamp(80px, 8vw, 130px);
+    height: clamp(36px, 4vw, 60px);
     position: absolute;
     top: 85%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 12px 12px;
+    padding: 12px;
     border-radius: 48px;
     border: none;
-    font-size: 16px;
+    font-size: clamp(11px, 1.2vw, 16px);
     font-family: "font_2";
     background-color: var(--text-primary-color);
     color: var(--bg-primary-color);
     font-weight: 900;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .About .aboutme {
-    font-size: 60px;
+    font-size: clamp(32px, 5vw, 60px);
     font-family: "font_2";
     color: var(--text-primary-color);
     display: inline-block;
@@ -416,25 +387,19 @@ body::-webkit-scrollbar {
     display: inline-block;
 }
 
-/* base color text */
 .about-base {
     color: #2A2A29;
-    /* normal color */
 }
 
-/* top colored text that will only show under cursor */
 .about-mask {
     position: absolute;
     padding-top: 3rem;
     left: 0;
     top: 0;
     color: #E0E0DA;
-    /* <-- color you want inside cursor */
     pointer-events: none;
     clip-path: circle(0px at 0 0);
 }
-
-
 
 .aboutme::selection {
     background-color: #2A2A29;
@@ -460,7 +425,7 @@ body::-webkit-scrollbar {
 
 .para p {
     padding: 5rem 8rem 0rem 8rem;
-    font-size: 20px;
+    font-size: clamp(14px, 1.4vw, 20px);
     text-align: center;
     font-family: "font_5";
     font-weight: 540;
@@ -468,7 +433,6 @@ body::-webkit-scrollbar {
     line-height: 1.6;
     z-index: 2;
 }
-
 
 .para p::selection {
     background-color: transparent;
@@ -513,8 +477,6 @@ body::-webkit-scrollbar {
     background-position: 0% 40%;
 }
 
-
-
 .para .links ul {
     display: flex;
     gap: 30px;
@@ -528,7 +490,6 @@ body::-webkit-scrollbar {
     }
 }
 
-
 .fa-square-instagram:hover {
     animation: fa-bounce 1s ease;
 }
@@ -540,6 +501,9 @@ body::-webkit-scrollbar {
 .fa-linkedin:hover {
     animation: fa-bounce 1s ease;
 }
+
+
+/* Marquee  */
 
 .marquee-wrapper::before,
 .marquee-wrapper::after {
@@ -556,11 +520,10 @@ body::-webkit-scrollbar {
     padding: 22px 0;
 }
 
-.marquee::selection{
+.marquee::selection {
     color: #E0E0DA;
     background-color: transparent;
 }
-
 
 .track {
     display: flex;
@@ -603,13 +566,13 @@ body::-webkit-scrollbar {
 }
 
 
+/* Achievement  */
 
 .Achievement {
     width: 100%;
     min-height: 100%;
     position: relative;
     max-width: 1920px;
-
 }
 
 .Achievement .back {
@@ -632,7 +595,6 @@ body::-webkit-scrollbar {
     z-index: 1;
     display: block;
 }
-
 
 .Achievement .top {
     pointer-events: none;
@@ -662,6 +624,7 @@ body::-webkit-scrollbar {
 }
 
 .text-hero .title-text {
+    /* height driven by font-size so all rows clip properly */
     height: 9vw;
     min-width: 50%;
 }
@@ -686,7 +649,7 @@ body::-webkit-scrollbar {
     color: black;
     font-weight: 100;
     line-height: .94;
-    font-size: clamp(4rem, 10vw, 10rem);
+    font-size: clamp(3rem, 10vw, 10rem);
 }
 
 .goto {
@@ -702,8 +665,8 @@ body::-webkit-scrollbar {
     border: 3px solid #2A2A29;
     background: #2A2A29;
     color: #fff;
-    width: clamp(100px, 10vw, 160px);
-    height: clamp(100px, 10vw, 160px);
+    width: clamp(80px, 10vw, 160px);
+    height: clamp(80px, 10vw, 160px);
     border-radius: 50%;
     overflow: hidden;
     position: relative;
@@ -770,6 +733,8 @@ body::-webkit-scrollbar {
 }
 
 
+/* Experience (placeholder) */
+
 .Experience {
     width: 100%;
     height: 100vh;
@@ -795,6 +760,7 @@ body::-webkit-scrollbar {
 }
 
 
+/* Footer */
 
 .talk-footer {
     width: 100%;
@@ -832,7 +798,6 @@ body::-webkit-scrollbar {
 
 .back-to-top:hover {
     transform: scale(1.15);
-
 }
 
 .footer-center h5 {
@@ -855,13 +820,6 @@ body::-webkit-scrollbar {
     flex-wrap: wrap;
 }
 
-.footer-buttons a:hover {
-    background-color: #E0E0DA;
-    color: #2A2A29;
-}
-
-
-
 .footer-buttons a {
     padding: .8rem 2rem;
     border-radius: 50px;
@@ -869,6 +827,12 @@ body::-webkit-scrollbar {
     text-decoration: none;
     color: #E0E0DA;
     font-family: "font_4";
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.footer-buttons a:hover {
+    background-color: #E0E0DA;
+    color: #2A2A29;
 }
 
 .footer-bottom {
@@ -879,10 +843,65 @@ body::-webkit-scrollbar {
     flex-wrap: wrap;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
 
-/* Extra Small Devices (< 480px) */
+/* ═══════════════════════════════════════════════════════════════════════════
+    RESPONSIVE
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Touch / pointer: coarse (mobile) ─── */
+@media (hover: none) and (pointer: coarse) {
+    #cursor {
+        display: none;
+    }
+
+    .about-mask {
+        display: none;
+    }
+
+    .footer-buttons a {
+        padding: 0.75rem 1.5rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    .back-to-top {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+/* ── Landscape / very short viewports ─── */
+@media (orientation: landscape) and (max-height: 500px) {
+    .hero {
+        min-height: auto;
+        gap: 1rem;
+        padding-top: 1rem;
+    }
+
+    .space {
+        height: 5vh;
+    }
+
+    .About {
+        min-height: auto;
+        gap: 1rem;
+    }
+
+    .marquee {
+        padding: 10px 0;
+    }
+
+    .marquee-wrapper::before,
+    .marquee-wrapper::after {
+        height: 10px;
+    }
+}
+
+/* ── Extra-small  (< 480 px) ─── */
 @media (max-width: 480px) {
+
+    /* nav */
     .navigation .navigate {
         gap: 0.5rem;
         left: 0;
@@ -900,6 +919,7 @@ body::-webkit-scrollbar {
         height: 6vh;
     }
 
+    /* hero */
     .hero {
         flex-direction: column;
         justify-content: center;
@@ -953,49 +973,50 @@ body::-webkit-scrollbar {
         display: none;
     }
 
-    #cursor {
-        width: clamp(80px, 12vw, 140px);
-        height: clamp(80px, 12vw, 140px);
-        font-size: clamp(12px, 3vw, 20px);
-        font-weight: 700;
-        letter-spacing: 1px;
-        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.4);
-    }
-
+    /* about */
     .About .para {
-        width: 90%;
-        margin: 0 5%;
+        width: 92%;
     }
 
     .para p {
-        padding: 2rem 2rem 0.5rem 2rem;
-        font-size: 14px;
+        padding: 2rem 1.5rem 1rem;
+        font-size: 13px;
         line-height: 1.5;
     }
 
-    #onespan,
-    #secondspan,
-    #thirdspan,
-    #fourspan {
+    .para .links {
+        display: none;
+    }
+
+    #onespan {
         width: 30px;
         height: 15px;
     }
 
-    .para .links{
-        display: none;
+    #secondspan {
+        width: 24px;
+        height: 15px;
     }
 
+    #thirdspan {
+        width: 28px;
+        height: 15px;
+    }
+
+    #fourspan {
+        width: 28px;
+        height: 15px;
+    }
+
+    /* video btn */
     .video-btn {
-        width: 60px;
-        height: 40px;
+        width: 64px;
+        height: 38px;
         font-size: 11px;
-        padding: 8px 8px;
+        padding: 6px 8px;
     }
 
-    .About .aboutme {
-        font-size: 32px;
-    }
-
+    /* marquee */
     .marquee-wrapper::before,
     .marquee-wrapper::after {
         height: 12px;
@@ -1006,60 +1027,76 @@ body::-webkit-scrollbar {
     }
 
     .dot {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
     }
 
     .word {
-        font-size: clamp(1.2rem, 3vw, 2rem);
+        font-size: clamp(1.1rem, 3vw, 1.8rem);
     }
 
     .content {
-        gap: 2rem;
-        padding-right: 2rem;
+        gap: 1.5rem;
+        padding-right: 1.5rem;
     }
 
-    .top .text-area {
-        width: 90%;
-        padding: 0 5%;
+    /* achievement */
+    .Achievement .back {
         height: auto;
+        min-height: 60vw;
+    }
+
+    /* 
+     * On very small screens the absolute layout of .text-hero breaks.
+     * We switch to a stacked layout that still preserves the slide logic.
+     */
+    .top .text-area {
+        width: 92%;
+        height: auto;
+        padding-bottom: 1rem;
     }
 
     .text-hero {
+        position: static;
+        transform: none;
         flex-direction: column;
-        gap: 2rem;
+        gap: 1.5rem;
+        padding: 1rem 0;
     }
 
     .text-hero .title-text,
     .text-hero .ele {
         width: 100%;
-        height: auto;
-        min-width: auto;
+        min-width: unset;
+    }
+
+    /* ele height must match the font-size so overflow:hidden clips correctly */
+    .text-hero .ele {
+        height: clamp(2.2rem, 9vw, 4rem);
     }
 
     .title-text .ele h1 {
-        font-size: clamp(1.5rem, 5vw, 3rem);
+        font-size: clamp(1.8rem, 7vw, 3.2rem);
     }
 
     .goto {
-        position: relative;
-        right: auto;
+        position: static;
         width: 100%;
-        text-align: center;
-        margin-top: 2rem;
+        text-align: left;
+        margin-top: 0.5rem;
     }
 
     .goto .button {
-        width: 60px;
-        height: 60px;
-        margin: 0 auto;
+        width: 64px;
+        height: 64px;
     }
 
     .button__circle {
-        width: 25px;
-        height: 25px;
+        width: 26px;
+        height: 26px;
     }
 
+    /* footer */
     .talk-footer {
         padding: 2rem 4%;
         gap: 1.5rem;
@@ -1067,10 +1104,6 @@ body::-webkit-scrollbar {
 
     .footer-center h5 {
         font-size: 12px;
-    }
-
-    .big-talk {
-        font-size: clamp(1.5rem, 8vw, 4rem);
     }
 
     .footer-buttons {
@@ -1088,8 +1121,8 @@ body::-webkit-scrollbar {
     }
 
     .back-to-top {
-        width: 35px;
-        height: 35px;
+        width: 36px;
+        height: 36px;
         font-size: 16px;
     }
 
@@ -1102,15 +1135,11 @@ body::-webkit-scrollbar {
     .space {
         height: 10vh;
     }
-
-    .Achievement .back {
-        height: auto;
-        min-height: 80vh;
-    }
 }
 
-/* Small Devices (480px - 768px) */
+/* ── Small  (480 px – 768 px) ─── */
 @media (min-width: 480px) and (max-width: 768px) {
+
     .navigation .navigate {
         gap: 1rem;
         left: 0;
@@ -1123,10 +1152,6 @@ body::-webkit-scrollbar {
         font-size: 13px;
     }
 
-    .hero .line {
-        display: none;
-    }
-
     .hero {
         flex-direction: column;
         justify-content: center;
@@ -1134,6 +1159,10 @@ body::-webkit-scrollbar {
         text-align: center;
         gap: 2rem;
         padding-top: 3rem;
+    }
+
+    .hero .line {
+        display: none;
     }
 
     .hero .circle_photo {
@@ -1171,57 +1200,57 @@ body::-webkit-scrollbar {
         font-size: 13px;
     }
 
-
-    #cursor {
-        width: clamp(90px, 12vw, 150px);
-        height: clamp(90px, 12vw, 150px);
-        font-size: clamp(13px, 3vw, 21px);
-        font-weight: 700;
-        letter-spacing: 1px;
-        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.4);
-    }
-
     .About .para {
-        width: 85%;
-        margin: 0 7.5%;
-    }
-
-    .links{
-        display: none;
+        width: 86%;
     }
 
     .para p {
-        padding: 2.5rem 3rem 2rem 3rem;
+        padding: 2.5rem 3rem 1.5rem;
         font-size: 15px;
     }
 
-    .video-btn {
-        width: 60px;
-        height: 40px;
-        font-size: 11px;
-        padding: 8px 8px;
-        transform: translate(-50%, -50%);
+    .links {
+        display: none;
     }
 
-    .About .aboutme {
-        font-size: 40px;
+    .video-btn {
+        width: 70px;
+        height: 42px;
+        font-size: 12px;
+        padding: 8px;
     }
 
     .dot {
-        width: 40px;
-        height: 40px;
+        width: 38px;
+        height: 38px;
     }
 
     .word {
-        font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+        font-size: clamp(1.4rem, 3.5vw, 2.3rem);
     }
 
+    /* achievement */
     .top .text-area {
         width: 90%;
+        height: auto;
     }
 
     .text-hero {
+        position: static;
+        transform: none;
         flex-direction: column;
+        gap: 1.5rem;
+        padding: 1rem 0;
+    }
+
+    .text-hero .title-text,
+    .text-hero .ele {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .text-hero .ele {
+        height: clamp(3rem, 9vw, 5.5rem);
     }
 
     .title-text .ele h1 {
@@ -1229,24 +1258,19 @@ body::-webkit-scrollbar {
     }
 
     .goto {
-        position: relative;
+        position: static;
         width: 100%;
-        text-align: center;
-        margin-top: 1.5rem;
+        text-align: left;
+        margin-top: 0.75rem;
     }
 
     .goto .button {
         width: 80px;
         height: 80px;
-        margin: 0 auto;
     }
 
     .talk-footer {
         padding: 2.5rem 5%;
-    }
-
-    .big-talk {
-        font-size: clamp(2rem, 10vw, 6rem);
     }
 
     .footer-buttons a {
@@ -1264,8 +1288,9 @@ body::-webkit-scrollbar {
     }
 }
 
-/* Tablet Devices (769px - 900px) */
+/* ── Tablet  (769 px – 900 px) ─── */
 @media (min-width: 769px) and (max-width: 900px) {
+
     .navigation .navigate {
         gap: 1.5rem;
         left: 60%;
@@ -1284,6 +1309,10 @@ body::-webkit-scrollbar {
         padding-top: 3rem;
     }
 
+    .hero .line {
+        display: none;
+    }
+
     .hero .circle_photo {
         height: clamp(250px, 35vw, 350px);
         width: clamp(250px, 35vw, 350px);
@@ -1296,53 +1325,42 @@ body::-webkit-scrollbar {
         font-size: clamp(4rem, 7vw, 6rem);
     }
 
-    .hero .line {
-        display: none;
-    }
-
-    #cursor {
-        width: clamp(95px, 12vw, 160px);
-        height: clamp(95px, 12vw, 160px);
-        font-size: clamp(14px, 3vw, 22px);
-        font-weight: 700;
-        letter-spacing: 1px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-    }
-
     .About .para {
         width: 80%;
     }
 
     .para p {
-        padding: 3rem 4rem 0 4rem;
+        padding: 3rem 4rem 0;
         font-size: 16px;
     }
 
     .video-btn {
-        width: 75px;
-        height: 40px;
+        width: 80px;
+        height: 44px;
         font-size: 14px;
     }
 
-    .About .aboutme {
-        font-size: 48px;
-    }
-
     .dot {
-        width: 50px;
-        height: 50px;
+        width: 48px;
+        height: 48px;
     }
 
     .word {
-        font-size: clamp(2rem, 3.5vw, 3rem);
+        font-size: clamp(1.8rem, 3.5vw, 3rem);
     }
 
+    /* achievement — keep side-by-side but fix overflow */
     .top .text-area {
-        width: 85%;
+        width: 86%;
+        height: 100vh;
+    }
+
+    .text-hero .ele {
+        height: clamp(5rem, 8vw, 7.5rem);
     }
 
     .title-text .ele h1 {
-        font-size: clamp(4rem, 8vw, 7rem);
+        font-size: clamp(3.5rem, 8vw, 7rem);
     }
 
     .goto .button {
@@ -1354,12 +1372,13 @@ body::-webkit-scrollbar {
         padding: 3rem 5%;
     }
 
-    .big-talk {
-        font-size: clamp(3rem, 11vw, 8rem);
-    }
-
     .footer-buttons a {
         padding: 0.75rem 1.5rem;
+    }
+
+    .back-to-top {
+        width: 38px;
+        height: 38px;
     }
 
     .space {
@@ -1367,7 +1386,7 @@ body::-webkit-scrollbar {
     }
 }
 
-/* Desktop Devices (> 900px) */
+/* ── Desktop  (> 900 px) ─── */
 @media (min-width: 901px) {
     .navigation .navigate {
         left: 66%;
@@ -1393,7 +1412,7 @@ body::-webkit-scrollbar {
     }
 
     .para p {
-        padding: 5rem 8rem 0 8rem;
+        padding: 5rem 8rem 0;
         font-size: 20px;
     }
 
@@ -1406,66 +1425,21 @@ body::-webkit-scrollbar {
         font-size: 60px;
     }
 
+    /* achievement ele height must match h1 font-size for overflow clipping */
+    .text-hero .ele {
+        height: 9vw;
+    }
+
     .title-text .ele h1 {
         font-size: clamp(4rem, 10vw, 10rem);
     }
 
     .goto .button {
-        width: 100px;
-        height: 100px;
+        width: clamp(100px, 10vw, 160px);
+        height: clamp(100px, 10vw, 160px);
     }
 
     .talk-footer {
         padding: 4rem 6%;
-    }
-}
-
-/* Touch device adjustments */
-@media (hover: none) and (pointer: coarse) {
-    #cursor {
-        display: none;
-    }
-
-    .about-mask {
-        display: none;
-    }
-
-    .footer-buttons a {
-        padding: 0.75rem 1.5rem;
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-    }
-
-    .back-to-top {
-        min-width: 44px;
-        min-height: 44px;
-    }
-}
-
-/* Landscape orientation */
-@media (orientation: landscape) and (max-height: 500px) {
-    .hero {
-        min-height: auto;
-        gap: 1rem;
-        padding-top: 1rem;
-    }
-
-    .space {
-        height: 5vh;
-    }
-
-    .About {
-        min-height: auto;
-        gap: 1rem;
-    }
-
-    .marquee {
-        padding: 10px 0;
-    }
-
-    .marquee-wrapper::before,
-    .marquee-wrapper::after {
-        height: 10px;
     }
 }
