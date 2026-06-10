@@ -132,20 +132,31 @@ async function loadCodeforcesStats() {
     }
 
     async function fetchWithRetry(endpoint, params, retries = 3, delay = 1500) {
-        const qs = new URLSearchParams({ endpoint, ...params }).toString();
-        const url = `/api/codeforces?${qs}`;
+        const qs = new URLSearchParams(params).toString();
+        const proxyUrl = `/api/codeforces?endpoint=${endpoint}&${qs}`;
+        const directUrl = `https://codeforces.com/api/${endpoint}?${qs}`;
 
         for (let i = 0; i < retries; i++) {
-            const res = await fetch(url);
-            if (res.status === 429) {
-                if (i < retries - 1) {
-                    await new Promise(r => setTimeout(r, delay * Math.pow(2, i)));
-                    continue;
+            try {
+                const res = await fetch(proxyUrl);
+                if (res.status === 403) {
+                    const direct = await fetch(directUrl);
+                    if (!direct.ok) throw new Error(`Direct CF HTTP ${direct.status}`);
+                    return direct;
                 }
-                throw new Error("Rate limited after retries");
+                if (res.status === 429) {
+                    if (i < retries - 1) {
+                        await new Promise(r => setTimeout(r, delay * Math.pow(2, i)));
+                        continue;
+                    }
+                    throw new Error("Rate limited after retries");
+                }
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res;
+            } catch (e) {
+                if (i === retries - 1) throw e;
+                await new Promise(r => setTimeout(r, delay * Math.pow(2, i)));
             }
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            return res;
         }
     }
 
