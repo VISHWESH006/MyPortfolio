@@ -1,40 +1,72 @@
-if (window.innerWidth > 768) {
-    Shery.imageEffect("#back", {
-        style: 5,
-        config: {
-            "a": { "value": 2.06, "range": [0, 30] },
-            "b": { "value": -1, "range": [-1, 1] },
-            "zindex": { "value": 9, "range": [-9999999, 9999999] },
-            "aspect": { "value": 1 },
-            "ignoreShapeAspect": { "value": false },
-            "shapePosition": { "value": { "x": 0, "y": 0 } },
-            "shapeScale": { "value": { "x": 0.5, "y": 0.5 } },
-            "shapeEdgeSoftness": { "value": 0.24, "range": [0, 0.5] },
-            "shapeRadius": { "value": 0, "range": [0, 2] },
-            "currentScroll": { "value": 0 },
-            "scrollLerp": { "value": 0.07 },
-            "gooey": { "value": true },
-            "infiniteGooey": { "value": true },
-            "growSize": { "value": 1, "range": [1, 15] },
-            "durationOut": { "value": 1, "range": [0.1, 5] },
-            "durationIn": { "value": 1.3, "range": [0.1, 5] },
-            "displaceAmount": { "value": 0.15 },
-            "masker": { "value": false },
-            "maskVal": { "value": 1, "range": [1, 5] },
-            "scrollType": { "value": 0 },
-            "geoVertex": { "range": [1, 64], "value": 1 },
-            "noEffectGooey": { "value": true },
-            "onMouse": { "value": 1 },
-            "noise_speed": { "value": 0.2, "range": [0, 10] },
-            "metaball": { "value": 0.17, "range": [0, 2], "_gsap": { "id": 3 } },
-            "discard_threshold": { "value": 0.54, "range": [0, 1] },
-            "antialias_threshold": { "value": 0, "range": [0, 0.1] },
-            "noise_height": { "value": 0.5, "range": [0, 2] },
-            "noise_scale": { "value": 10, "range": [0, 100] }
-        },
-        gooey: true
-    });
+async function loadDesktopShery() {
+    if (window.innerWidth <= 768) return;
+
+    const loadScript = (src) => {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    };
+
+    try {
+        // Load only if not already loaded
+        if (!window.THREE) {
+            await loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js");
+        }
+
+        if (!window.ControlKit) {
+            await loadScript("https://cdn.jsdelivr.net/gh/automat/controlkit.js@master/bin/controlKit.min.js");
+        }
+
+        if (!window.Shery) {
+            await loadScript("https://unpkg.com/sheryjs/dist/Shery.js");
+        }
+
+        Shery.imageEffect("#back", {
+            style: 5,
+            config: {
+                "a": { "value": 2.06, "range": [0, 30] },
+                "b": { "value": -1, "range": [-1, 1] },
+                "zindex": { "value": 9, "range": [-9999999, 9999999] },
+                "aspect": { "value": 1 },
+                "ignoreShapeAspect": { "value": false },
+                "shapePosition": { "value": { "x": 0, "y": 0 } },
+                "shapeScale": { "value": { "x": 0.5, "y": 0.5 } },
+                "shapeEdgeSoftness": { "value": 0.24, "range": [0, 0.5] },
+                "shapeRadius": { "value": 0, "range": [0, 2] },
+                "currentScroll": { "value": 0 },
+                "scrollLerp": { "value": 0.07 },
+                "gooey": { "value": true },
+                "infiniteGooey": { "value": true },
+                "growSize": { "value": 1, "range": [1, 15] },
+                "durationOut": { "value": 1, "range": [0.1, 5] },
+                "durationIn": { "value": 1.3, "range": [0.1, 5] },
+                "displaceAmount": { "value": 0.15 },
+                "masker": { "value": false },
+                "maskVal": { "value": 1, "range": [1, 5] },
+                "scrollType": { "value": 0 },
+                "geoVertex": { "range": [1, 64], "value": 1 },
+                "noEffectGooey": { "value": true },
+                "onMouse": { "value": 1 },
+                "noise_speed": { "value": 0.2, "range": [0, 10] },
+                "metaball": { "value": 0.17, "range": [0, 2], "_gsap": { "id": 3 } },
+                "discard_threshold": { "value": 0.54, "range": [0, 1] },
+                "antialias_threshold": { "value": 0, "range": [0, 0.1] },
+                "noise_height": { "value": 0.5, "range": [0, 2] },
+                "noise_scale": { "value": 10, "range": [0, 100] }
+            },
+            gooey: true
+        });
+
+    } catch (err) {
+        console.error("Failed to load Shery:", err);
+    }
 }
+
+loadDesktopShery();
 
 const projectsData = [
     {
@@ -108,15 +140,25 @@ if (projMobileEl) {
     projMobileEl.appendChild(foot);
 }
 
-async function loadCodeforcesStats() {
-    const CF_HANDLE = "vishwesh07";
-    const statusEl = document.getElementById("cf-status");
-    const heatmapEl = document.getElementById("cf-heatmap");
+function shouldUseLiveApis() {
+    const host = window.location.hostname;
+    return host !== "localhost" && host !== "127.0.0.1" && host !== "0.0.0.0" && !window.location.protocol.startsWith("file");
+}
+
+async function loadLeetCodeStats() {
+    const LC_HANDLE = "vishwesh07";
+    const statusEl = document.getElementById("lc-status");
+
+    if (!shouldUseLiveApis()) {
+        if (statusEl) statusEl.textContent = "offline";
+        setAllFailed();
+        return;
+    }
 
     function setCardNum(id, val) {
         const el = document.getElementById(id);
         if (el) {
-            const num = el.querySelector(".cf-card__num");
+            const num = el.querySelector(".lc-card__num");
             if (num) {
                 num.classList.remove("loading");
                 num.textContent = val;
@@ -125,175 +167,52 @@ async function loadCodeforcesStats() {
     }
 
     function setAllFailed() {
-        document.querySelectorAll(".cf-card__num").forEach(el => {
+        document.querySelectorAll(".lc-card__num").forEach(el => {
             el.classList.remove("loading");
             el.textContent = "—";
         });
     }
 
-    async function fetchWithRetry(endpoint, params, retries = 3, delay = 1500) {
-        const qs = new URLSearchParams(params).toString();
-        const proxyUrl = `/api/codeforces?endpoint=${endpoint}&${qs}`;
-        const directUrl = `https://codeforces.com/api/${endpoint}?${qs}`;
-
-        for (let i = 0; i < retries; i++) {
-            try {
-                const res = await fetch(proxyUrl);
-                if (res.status === 403) {
-                    const direct = await fetch(directUrl);
-                    if (!direct.ok) throw new Error(`Direct CF HTTP ${direct.status}`);
-                    return direct;
-                }
-                if (res.status === 429) {
-                    if (i < retries - 1) {
-                        await new Promise(r => setTimeout(r, delay * Math.pow(2, i)));
-                        continue;
-                    }
-                    throw new Error("Rate limited after retries");
-                }
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                return res;
-            } catch (e) {
-                if (i === retries - 1) throw e;
-                await new Promise(r => setTimeout(r, delay * Math.pow(2, i)));
-            }
-        }
-    }
-
-    document.querySelectorAll(".cf-card__num").forEach(el => el.classList.add("loading"));
+    document.querySelectorAll(".lc-card__num").forEach(el => el.classList.add("loading"));
 
     try {
-        const CACHE_KEY = "cf_processed_data_v2";
-        const CACHE_TIME_KEY = "cf_time_cache_v2";
+        const CACHE_KEY = "lc_processed_data_v2";
+        const CACHE_TIME_KEY = "lc_time_cache_v2";
         const CACHE_DURATION = 6 * 60 * 60 * 1000;
 
-        let statsObject;
+        let stats;
         const now = Date.now();
         const cachedData = localStorage.getItem(CACHE_KEY);
         const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
 
         if (cachedData && cachedTime && (now - parseInt(cachedTime) < CACHE_DURATION)) {
-            statsObject = JSON.parse(cachedData);
+            stats = JSON.parse(cachedData);
         } else {
-            const [infoRes, statusRes, ratingRes] = await Promise.all([
-                fetchWithRetry("user.info", { handles: CF_HANDLE }),
-                fetchWithRetry("user.status", { handle: CF_HANDLE }),
-                fetchWithRetry("user.rating", { handle: CF_HANDLE })
-            ]);
+            const res = await fetch(`/api/leetcode?username=${encodeURIComponent(LC_HANDLE)}`, { cache: "no-store" });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const json = await res.json();
+            stats = json.stats;
+            if (!stats) throw new Error("No LeetCode stats returned");
 
-            const statusData = await statusRes.json();
-            const ratingData = await ratingRes.json();
-
-            if (statusData.status !== "OK") throw new Error("CF API error");
-
-            const submissions = statusData.result;
-            const totalSubs = submissions.length;
-
-            const acceptedSet = new Set();
-            const daySet = new Set();
-            const activityMap = {};
-
-            submissions.forEach(s => {
-                const d = new Date(s.creationTimeSeconds * 1000);
-                const mapKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-                activityMap[mapKey] = (activityMap[mapKey] || 0) + 1;
-
-                if (s.verdict === "OK") {
-                    acceptedSet.add(`${s.problem.contestId}_${s.problem.index}`);
-                    daySet.add(`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`);
-                }
-            });
-
-            const solved = acceptedSet.size;
-            const accepted = submissions.filter(s => s.verdict === "OK").length;
-            const acceptRate = totalSubs > 0 ? Math.round((accepted / totalSubs) * 100) : 0;
-            const contests = ratingData.status === "OK" ? ratingData.result.length : 0;
-
-            let currentStreak = 0;
-            let maxStreak = 0;
-            let streak = 0;
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-
-            for (let i = 0; i < 365; i++) {
-                const d = new Date(today);
-                d.setDate(today.getDate() - i);
-                const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-                if (daySet.has(key)) {
-                    streak++;
-                    if (i === 0 || streak > 1) currentStreak = streak;
-                } else {
-                    if (i === 0) currentStreak = 0;
-                    if (streak > maxStreak) maxStreak = streak;
-                    streak = 0;
-                }
-            }
-            if (streak > maxStreak) maxStreak = streak;
-
-            statsObject = {
-                solved,
-                totalSubs,
-                acceptRate,
-                contests,
-                currentStreak,
-                maxStreak,
-                activityMap
-            };
-
-            localStorage.setItem(CACHE_KEY, JSON.stringify(statsObject));
+            localStorage.setItem(CACHE_KEY, JSON.stringify(stats));
             localStorage.setItem(CACHE_TIME_KEY, now.toString());
         }
 
-        setCardNum("cf-solved", statsObject.solved);
-        setCardNum("cf-streak", statsObject.currentStreak + "d");
-        setCardNum("cf-submissions", statsObject.totalSubs);
-        setCardNum("cf-acceptance", statsObject.acceptRate + "%");
-        setCardNum("cf-contests", statsObject.contests);
-        setCardNum("cf-maxstreak", statsObject.maxStreak + "d");
+        setCardNum("lc-solved", (stats.totalSolved ?? 0).toLocaleString());
+        setCardNum("lc-easy", (stats.easySolved ?? 0).toLocaleString());
+        setCardNum("lc-medium", (stats.mediumSolved ?? 0).toLocaleString());
+        setCardNum("lc-hard", (stats.hardSolved ?? 0).toLocaleString());
+        setCardNum("lc-acceptance", `${stats.acceptRate ?? 0}%`);
+        setCardNum("lc-rank", stats.rank ? `#${stats.rank.toLocaleString()}` : "—");
 
         if (statusEl) statusEl.textContent = "live data";
-
-        if (heatmapEl) {
-            heatmapEl.innerHTML = "";
-            const heatmapNow = new Date();
-            heatmapNow.setHours(0, 0, 0, 0);
-            const weeks = 26;
-            const startDay = new Date(heatmapNow);
-            startDay.setDate(heatmapNow.getDate() - (weeks * 7 - 1));
-
-            for (let w = 0; w < weeks; w++) {
-                const weekEl = document.createElement("div");
-                weekEl.className = "cf-week";
-                for (let d = 0; d < 7; d++) {
-                    const dayEl = document.createElement("div");
-                    dayEl.className = "cf-day";
-                    const dayIndex = w * 7 + d;
-                    const date = new Date(startDay);
-                    date.setDate(startDay.getDate() + dayIndex);
-
-                    if (date <= heatmapNow) {
-                        const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-                        const count = statsObject.activityMap[key] || 0;
-                        const level = count === 0 ? 0 : count <= 2 ? 1 : count <= 4 ? 2 : count <= 7 ? 3 : count <= 10 ? 4 : 5;
-                        dayEl.setAttribute("data-count", level);
-                        dayEl.title = `${key}: ${count} submission${count !== 1 ? "s" : ""}`;
-                    } else {
-                        dayEl.style.opacity = "0";
-                    }
-                    weekEl.appendChild(dayEl);
-                }
-                heatmapEl.appendChild(weekEl);
-            }
-        }
-
     } catch (e) {
-        console.error("Codeforces Fetch Error:", e);
-        if (statusEl) statusEl.textContent = "unavailable (rate limited or down)";
+        if (statusEl) statusEl.textContent = "unavailable";
         setAllFailed();
     }
 }
 
-loadCodeforcesStats();
+loadLeetCodeStats();
 
 var video = document.querySelector("#video");
 var videobtn = document.querySelector("#video-btn");
