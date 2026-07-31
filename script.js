@@ -146,7 +146,7 @@ function shouldUseLiveApis() {
 }
 
 async function loadLeetCodeStats() {
-    const LC_HANDLE = "vishwesh07";
+    const LC_HANDLE = "vishwesh006";
     const statusEl = document.getElementById("lc-status");
 
     if (!shouldUseLiveApis()) {
