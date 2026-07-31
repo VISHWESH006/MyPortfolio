@@ -9,7 +9,7 @@ module.exports = async function handler(req, res) {
         const { username } = req.query;
         console.log("Received username:", username);
         if (!username) {
-            return res.status(400).json({ error: "vishwesh006" });
+            return res.status(400).json({ error: "username" });
         }
 
         const query = `
