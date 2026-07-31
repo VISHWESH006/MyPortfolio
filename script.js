@@ -1,3 +1,4 @@
+console.log("SCRIPT.JS LOADED");
 async function loadDesktopShery() {
     if (window.innerWidth <= 768) return;
 
