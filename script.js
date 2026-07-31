@@ -188,10 +188,20 @@ async function loadLeetCodeStats() {
         if (cachedData && cachedTime && (now - parseInt(cachedTime) < CACHE_DURATION)) {
             stats = JSON.parse(cachedData);
         } else {
-            const res = await fetch(`/api/leetcode?username=${encodeURIComponent(LC_HANDLE)}`, { cache: "no-store" });
+            const res = await fetch(`/api/leetcode?username=${encodeURIComponent(LC_HANDLE)}`, {
+                cache: "no-store"
+            });
+
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
             const json = await res.json();
+
+            console.log("LeetCode API Response:", json);
+
             stats = json.stats;
+
+            console.log("Stats being used:", stats);
+
             if (!stats) throw new Error("No LeetCode stats returned");
 
             localStorage.setItem(CACHE_KEY, JSON.stringify(stats));
