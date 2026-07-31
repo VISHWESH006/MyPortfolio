@@ -1,22 +1,6 @@
 const https = require("https");
 
-function httpsGet(url) {
-    return new Promise((resolve, reject) => {
-        const options = {
-            headers: {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Accept": "application/json, text/plain, */*",
-                "Accept-Language": "en-US,en;q=0.9"
-            }
-        };
-
-        https.get(url, options, (res) => {
-            let data = "";
-            res.on("data", chunk => data += chunk);
-            res.on("end", () => resolve({ status: res.statusCode, body: data }));
-        }).on("error", reject);
-    });
-}
+const LEETCODE_GRAPHQL_URL = "https://leetcode.com/graphql";
 
 module.exports = async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -27,7 +11,6 @@ module.exports = async function handler(req, res) {
             return res.status(400).json({ error: "vishwesh006" });
         }
 
-        const url = `https://leetcode.com/graphql`;
         const query = `
             query userProblemsSolved($username: String!) {
                 matchedUser(username: $username) {
@@ -37,6 +20,10 @@ module.exports = async function handler(req, res) {
                     }
                     submitStats: submitStatsGlobal {
                         acSubmissionNum {
+                            difficulty
+                            count
+                        }
+                        totalSubmissionNum {
                             difficulty
                             count
                         }
@@ -60,7 +47,7 @@ module.exports = async function handler(req, res) {
                 }
             };
 
-            const request = https.request(url, reqOptions, (res) => {
+            const request = https.request(LEETCODE_GRAPHQL_URL, reqOptions, (res) => {
                 let data = "";
                 res.on("data", chunk => data += chunk);
                 res.on("end", () => resolve({ status: res.statusCode, body: data }));
@@ -87,18 +74,25 @@ module.exports = async function handler(req, res) {
             return res.status(404).json({ error: "LeetCode user not found" });
         }
 
-        const acSubmissionNum = matchedUser.submitStats?.acSubmissionNum || [];
-        const getCount = (difficulty) => {
-            const item = acSubmissionNum.find(entry => entry.difficulty === difficulty);
+        const submitStats = matchedUser.submitStats || {};
+        const acSubmissionNum = submitStats.acSubmissionNum || [];
+        const totalSubmissionNum = submitStats.totalSubmissionNum || [];
+
+        const getCount = (difficulty, source) => {
+            const item = source.find(entry => entry.difficulty === difficulty);
             return item?.count ?? 0;
         };
 
+        const totalAccepted = getCount("All", acSubmissionNum);
+        const totalSubmitted = getCount("All", totalSubmissionNum);
+        const acceptance = totalSubmitted > 0 ? Math.round((totalAccepted / totalSubmitted) * 100) : 0;
+
         const stats = {
-            totalSolved: getCount("All") ?? 0,
-            easySolved: getCount("Easy") ?? 0,
-            mediumSolved: getCount("Medium") ?? 0,
-            hardSolved: getCount("Hard") ?? 0,
-            acceptRate: 0,
+            totalSolved: totalAccepted || getCount("All", acSubmissionNum) || 0,
+            easySolved: getCount("Easy", acSubmissionNum) || 0,
+            mediumSolved: getCount("Medium", acSubmissionNum) || 0,
+            hardSolved: getCount("Hard", acSubmissionNum) || 0,
+            acceptRate: acceptance,
             rank: matchedUser.profile?.ranking ?? 0
         };
 
