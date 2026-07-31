@@ -140,44 +140,33 @@ if (projMobileEl) {
     projMobileEl.appendChild(foot);
 }
 
-function shouldUseLiveApis() {
-    const host = window.location.hostname;
-    return host !== "localhost" && host !== "127.0.0.1" && host !== "0.0.0.0" && !window.location.protocol.startsWith("file");
-}
-
 async function loadLeetCodeStats() {
     const LC_HANDLE = "vishwesh006";
     const statusEl = document.getElementById("lc-status");
 
-    if (!shouldUseLiveApis()) {
-        if (statusEl) statusEl.textContent = "offline";
-        setAllFailed();
-        return;
-    }
-
-    function setCardNum(id, val) {
+    const setCardNum = (id, val) => {
         const el = document.getElementById(id);
-        if (el) {
-            const num = el.querySelector(".lc-card__num");
-            if (num) {
-                num.classList.remove("loading");
-                num.textContent = val;
-            }
-        }
-    }
+        if (!el) return;
 
-    function setAllFailed() {
-        document.querySelectorAll(".lc-card__num").forEach(el => {
+        const num = el.querySelector(".lc-card__num");
+        if (!num) return;
+
+        num.classList.remove("loading");
+        num.textContent = val;
+    };
+
+    const setAllFailed = () => {
+        document.querySelectorAll(".lc-card__num").forEach((el) => {
             el.classList.remove("loading");
             el.textContent = "—";
         });
-    }
+    };
 
-    document.querySelectorAll(".lc-card__num").forEach(el => el.classList.add("loading"));
+    document.querySelectorAll(".lc-card__num").forEach((el) => el.classList.add("loading"));
 
     try {
-        const CACHE_KEY = "lc_processed_data_v2";
-        const CACHE_TIME_KEY = "lc_time_cache_v2";
+        const CACHE_KEY = `leetcode_${LC_HANDLE}`;
+        const CACHE_TIME_KEY = `leetcode_time_${LC_HANDLE}`;
         const CACHE_DURATION = 6 * 60 * 60 * 1000;
 
         let stats;
@@ -185,24 +174,31 @@ async function loadLeetCodeStats() {
         const cachedData = localStorage.getItem(CACHE_KEY);
         const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
 
-        if (cachedData && cachedTime && (now - parseInt(cachedTime) < CACHE_DURATION)) {
+        if (cachedData && cachedTime && now - Number(cachedTime) < CACHE_DURATION) {
+            console.log("Using cached LeetCode data");
             stats = JSON.parse(cachedData);
         } else {
+            console.log("Fetching live LeetCode data...");
+
             const res = await fetch(`/api/leetcode?username=${encodeURIComponent(LC_HANDLE)}`, {
                 cache: "no-store"
             });
 
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            console.log("LeetCode response status:", res.status);
+
+            if (!res.ok) {
+                throw new Error(`HTTP ${res.status}`);
+            }
 
             const json = await res.json();
-
-            console.log("LeetCode API Response:", json);
+            console.log("LeetCode response", json);
 
             stats = json.stats;
+            console.log(stats);
 
-            console.log("Stats being used:", stats);
-
-            if (!stats) throw new Error("No LeetCode stats returned");
+            if (!stats) {
+                throw new Error("No LeetCode stats returned");
+            }
 
             localStorage.setItem(CACHE_KEY, JSON.stringify(stats));
             localStorage.setItem(CACHE_TIME_KEY, now.toString());
@@ -215,9 +211,16 @@ async function loadLeetCodeStats() {
         setCardNum("lc-acceptance", `${stats.acceptRate ?? 0}%`);
         setCardNum("lc-rank", stats.rank ? `#${stats.rank.toLocaleString()}` : "—");
 
-        if (statusEl) statusEl.textContent = "live data";
-    } catch (e) {
-        if (statusEl) statusEl.textContent = "unavailable";
+        if (statusEl) {
+            statusEl.textContent = "live data";
+        }
+    } catch (error) {
+        console.error(error);
+
+        if (statusEl) {
+            statusEl.textContent = "unavailable";
+        }
+
         setAllFailed();
     }
 }
