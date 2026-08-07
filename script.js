@@ -1,4 +1,3 @@
-console.log("SCRIPT.JS LOADED");
 async function loadDesktopShery() {
     if (window.innerWidth <= 768) return;
 
@@ -210,7 +209,13 @@ async function loadLeetCodeStats() {
         setCardNum("lc-medium", (stats.mediumSolved ?? 0).toLocaleString());
         setCardNum("lc-hard", (stats.hardSolved ?? 0).toLocaleString());
         setCardNum("lc-acceptance", `${stats.acceptRate ?? 0}%`);
-        setCardNum("lc-rank", stats.rank ? `#${stats.rank.toLocaleString()}` : "—");
+
+        const streakValue = Number(stats.streak);
+        setCardNum("lc-rank",
+            Number.isFinite(streakValue) && streakValue >= 0
+                ? `#${streakValue.toLocaleString()}`
+                : "—"
+        );
 
         if (statusEl) {
             statusEl.textContent = "live data";
