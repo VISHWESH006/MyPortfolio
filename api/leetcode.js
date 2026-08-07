@@ -7,9 +7,8 @@ module.exports = async function handler(req, res) {
 
     try {
         const { username } = req.query;
-        console.log("Received username:", username);
         if (!username) {
-            return res.status(400).json({ error: "username" });
+            return res.status(400).json({ error: "vishwesh006" });
         }
 
         const query = `
@@ -18,6 +17,9 @@ module.exports = async function handler(req, res) {
                     username
                     profile {
                         ranking
+                    }
+                    userCalendar {
+                        streak
                     }
                     submitStats: submitStatsGlobal {
                         acSubmissionNum {
@@ -94,7 +96,7 @@ module.exports = async function handler(req, res) {
             mediumSolved: getCount("Medium", acSubmissionNum) || 0,
             hardSolved: getCount("Hard", acSubmissionNum) || 0,
             acceptRate: acceptance,
-            rank: matchedUser.profile?.ranking ?? 0
+            streak: matchedUser.userCalendar?.streak ?? 0
         };
 
         res.setHeader("Cache-Control", "s-maxage=21600, stale-while-revalidate");
