@@ -3,6 +3,10 @@ async function loadDesktopShery() {
 
     const loadScript = (src) => {
         return new Promise((resolve, reject) => {
+            // Check if script is already loaded
+            if (document.querySelector(`script[src="${src}"]`)) {
+                return resolve();
+            }
             const script = document.createElement("script");
             script.src = src;
             script.onload = resolve;
@@ -12,15 +16,13 @@ async function loadDesktopShery() {
     };
 
     try {
-        // Load only if not already loaded
-        if (!window.THREE) {
-            await loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js");
-        }
+        // Load THREE.js and ControlKit in PARALLEL (they don't depend on each other)
+        await Promise.all([
+            !window.THREE ? loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js") : Promise.resolve(),
+            !window.ControlKit ? loadScript("https://cdn.jsdelivr.net/gh/automat/controlkit.js@master/bin/controlKit.min.js") : Promise.resolve()
+        ]);
 
-        if (!window.ControlKit) {
-            await loadScript("https://cdn.jsdelivr.net/gh/automat/controlkit.js@master/bin/controlKit.min.js");
-        }
-
+        // Then load Shery (depends on both above)
         if (!window.Shery) {
             await loadScript("https://unpkg.com/sheryjs/dist/Shery.js");
         }
@@ -66,7 +68,13 @@ async function loadDesktopShery() {
     }
 }
 
-loadDesktopShery();
+// Defer heavy WebGL loading until browser is idle
+if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => loadDesktopShery(), { timeout: 2000 });
+} else {
+    // Fallback: load after a short delay to not block initial render
+    setTimeout(loadDesktopShery, 200);
+}
 
 const projectsData = [
     {
@@ -231,22 +239,14 @@ async function loadLeetCodeStats() {
     }
 }
 
-loadLeetCodeStats();
-
-var video = document.querySelector("#video");
-var videobtn = document.querySelector("#video-btn");
-
-if (videobtn) {
-    videobtn.addEventListener("click", function () {
-        if (videobtn.innerText.trim() === "> PLAY") {
-            video.style.zIndex = "9";
-            videobtn.innerText = "PAUSE";
-        } else {
-            video.style.zIndex = "-1";
-            videobtn.innerText = "> PLAY";
-        }
-    });
+// Defer LeetCode stats loading — it's below the fold and non-critical
+if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => loadLeetCodeStats(), { timeout: 3000 });
+} else {
+    setTimeout(loadLeetCodeStats, 500);
 }
+
+
 
 const groups = document.querySelectorAll(".ele");
 const totalSlides = groups.length > 0 ? groups[0].querySelectorAll("h1").length : 0;

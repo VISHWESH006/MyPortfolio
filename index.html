@@ -4,13 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vishwesh_Singh</title>
-    <link rel="stylesheet" href="https://unpkg.com/sheryjs/dist/Shery.css" />
-    <link rel="stylesheet" href="protfolio.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Vishwesh Singh — AI/ML Developer & Software Engineer</title>
+    <meta name="description" content="Portfolio of Vishwesh Singh — Computer Science undergraduate specializing in AI/ML. Building scalable software, research projects, and real-world applications.">
+
+    <!-- Preconnect to CDN origins (saves ~200ms DNS+TLS per origin) -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- Preload critical hero image for faster LCP -->
+    <link rel="preload" href="assets/images/me.jpg" as="image">
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/fevicon.png" sizes="32x32">
     <link rel="icon" type="image/png" href="assets/images/fevicon.png" sizes="16x16">
     <link rel="shortcut icon" href="assets/images/fevicon.png">
+
+    <!-- Critical inline CSS for instant above-fold render -->
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        html,body{height:100%;width:100%}
+        body::-webkit-scrollbar{display:none}
+        .main{width:100%;min-height:100vh;background-color:#E0E0DA;display:flex;flex-direction:column;position:relative}
+        .hero{position:relative;min-height:100vh}
+        .navigation{position:absolute;top:0;width:100%;height:15vh;background-color:transparent;z-index:9}
+    </style>
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="protfolio.css">
+
+    <!-- Shery CSS — only needed for WebGL effects on desktop, load async -->
+    <link rel="stylesheet" href="https://unpkg.com/sheryjs/dist/Shery.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://unpkg.com/sheryjs/dist/Shery.css" /></noscript>
+
+    <!-- Font Awesome — loaded async to unblock initial render -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
 </head>
 
 <body>
@@ -31,7 +62,7 @@
         <div class="hero">
             <div class="line"></div>
             <div class="circle_photo">
-                <img src="assets/images/me.jpg" alt="It's me">
+                <img src="assets/images/me.jpg" alt="Vishwesh Singh" fetchpriority="high">
             </div>
             <p class="fname">VISHWESH</p>
             <p class="lname">SINGH</p>
@@ -73,7 +104,7 @@
                                 <span>Firebase</span>
                                 <span>Node.js</span>
                             </div>
-                            <a class="proj-col__link" href="https://github.com/VISHWESH006" target="_blank">
+                            <a class="proj-col__link" href="https://github.com/VISHWESH006" target="_blank" rel="noopener noreferrer">
                                 View Repo <i class="fa-brands fa-github"></i>
                             </a>
                         </div>
@@ -99,7 +130,7 @@
                                 <span>Firebase</span>
                                 <span>OpenAI API</span>
                             </div>
-                            <a class="proj-col__link" href="https://github.com/VISHWESH006" target="_blank">
+                            <a class="proj-col__link" href="https://github.com/VISHWESH006" target="_blank" rel="noopener noreferrer">
                                 View Repo <i class="fa-brands fa-github"></i>
                             </a>
                         </div>
@@ -124,7 +155,7 @@
                                 <span>Node.js</span>
                                 <span>Firebase</span>
                             </div>
-                            <a class="proj-col__link" href="https://github.com/VISHWESH006" target="_blank">
+                            <a class="proj-col__link" href="https://github.com/VISHWESH006" target="_blank" rel="noopener noreferrer">
                                 View Repo <i class="fa-brands fa-github"></i>
                             </a>
                         </div>
@@ -146,7 +177,7 @@
                             <div class="proj-col__stack">
                                 <span>Wordpress</span>
                             </div>
-                            <a class="proj-col__link" href="https://sndevelopers.net" target="_blank">
+                            <a class="proj-col__link" href="https://sndevelopers.net" target="_blank" rel="noopener noreferrer">
                                 Visit <i class="fa-solid fa-arrow-right fa-rotate-by"
                                     style="--fa-rotate-angle: -45deg;"></i>
                             </a>
@@ -157,7 +188,7 @@
             <div class="proj-mobile"></div>
             <div class="projects-footer-bar">
                 <span>© Vishwesh Singh</span>
-                <a href="https://github.com/VISHWESH006" target="_blank">
+                <a href="https://github.com/VISHWESH006" target="_blank" rel="noopener noreferrer">
                     All Projects on GitHub <i class="fa-brands fa-github"></i>
                 </a>
             </div>
@@ -172,10 +203,10 @@
                     </h1>
                     <div class="about-image-stack">
                         <div class="about-img-card about-img-card--1">
-                            <img src="assets/images/computer_science.jpeg" alt="">
+                            <img src="assets/images/computer_science.jpeg" alt="Computer Science" loading="lazy">
                         </div>
                         <div class="about-img-card about-img-card--2">
-                            <img src="assets/images/ai.jpeg" alt="">
+                            <img src="assets/images/ai.jpeg" alt="Artificial Intelligence" loading="lazy">
                         </div>
                     </div>
                     <div class="about-skills-row">
@@ -231,7 +262,7 @@
                                 <div class="lc-panel__header">
                                     <span class="lc-panel__label">LEETCODE</span>
                                     <span class="lc-panel__handle">
-                                        <a href="https://leetcode.com/u/vishwesh006/" target="_blank">@vishwesh006 <i
+                                        <a href="https://leetcode.com/u/vishwesh006/" target="_blank" rel="noopener noreferrer">@vishwesh006 <i
                                                 class="fa-solid fa-arrow-up-right-from-square"
                                                 style="font-size:9px"></i></a>
                                     </span>
@@ -270,15 +301,15 @@
                             <div class="links">
                                 <ul>
                                     <li><a href="https://www.linkedin.com/in/vishwesh-singh-274263330/"
-                                            target="_blank"><i class="fa-brands fa-linkedin fa-2x"></i></a></li>
-                                    <li><a href="https://github.com/VISHWESH006" target="_blank"><i
+                                            target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin fa-2x"></i></a></li>
+                                    <li><a href="https://github.com/VISHWESH006" target="_blank" rel="noopener noreferrer"><i
                                                 class="fa-brands fa-github fa-2x"></i></a></li>
-                                    <li><a href="https://www.instagram.com/vishu__7905/" target="_blank"><i
+                                    <li><a href="https://www.instagram.com/vishu__7905/" target="_blank" rel="noopener noreferrer"><i
                                                 class="fa-brands fa-square-instagram fa-2x"></i></a></li>
                                 </ul>
                             </div>
                             <a class="about-resume-btn"
-                                href="https://github.com/VISHWESH006/Resume/blob/main/Resume_.pdf" target="_blank">
+                                href="https://github.com/VISHWESH006/Resume/blob/main/Resume_.pdf" target="_blank" rel="noopener noreferrer">
                                 VIEW RESUME <i class="fa-solid fa-arrow-right fa-rotate-by"
                                     style="--fa-rotate-angle:-45deg"></i>
                             </a>
@@ -307,9 +338,9 @@
         </div>
         <section class="Achievement" id="Achievement">
             <div class="back" id="back">
-                <img src="assets/images/gsoc.png" alt="gsoc">
-                <img src="assets/images/medimind.png" alt="medimind">
-                <img src="assets/images/rubricai.png" alt="rubric">
+                <img src="assets/images/gsoc.png" alt="G-Soc Hackathon" loading="lazy">
+                <img src="assets/images/medimind.png" alt="Medimind Project" loading="lazy">
+                <img src="assets/images/rubricai.png" alt="RubricAI Project" loading="lazy">
             </div>
             <div class="top" id="top">
                 <div class="text-area">
@@ -344,7 +375,7 @@
                                     <span style="--index:14;">R</span><span style="--index:15;">E</span>
                                     <span style="--index:16;">P</span><span style="--index:17;">O</span>
                                 </p>
-                                <a href="https://github.com/VISHWESH006" target="_blank">
+                                <a href="https://github.com/VISHWESH006" target="_blank" rel="noopener noreferrer">
                                     <div class="button__circle">
                                         <svg viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg"
                                             class="button__icon" width="14">
@@ -374,7 +405,7 @@
                             <span class="mcard__tag">Hackathon</span>
                             <h3 class="mcard__title">G-Soc Hackathon</h3>
                             <p class="mcard__sub">1st Runner Up</p>
-                            <a class="mcard__link" href="https://github.com/VISHWESH006" target="_blank">View on GitHub
+                            <a class="mcard__link" href="https://github.com/VISHWESH006" target="_blank" rel="noopener noreferrer">View on GitHub
                                 <i class="fa-brands fa-github"></i></a>
                         </div>
                     </div>
@@ -384,7 +415,7 @@
                             <span class="mcard__tag">Health Tech</span>
                             <h3 class="mcard__title">Medimind</h3>
                             <p class="mcard__sub">Health Tracker</p>
-                            <a class="mcard__link" href="https://github.com/VISHWESH006" target="_blank">View on GitHub
+                            <a class="mcard__link" href="https://github.com/VISHWESH006" target="_blank" rel="noopener noreferrer">View on GitHub
                                 <i class="fa-brands fa-github"></i></a>
                         </div>
                     </div>
@@ -394,7 +425,7 @@
                             <span class="mcard__tag">AI Tool</span>
                             <h3 class="mcard__title">RUBRIC-AI</h3>
                             <p class="mcard__sub">Assignment Analyzer</p>
-                            <a class="mcard__link" href="https://github.com/VISHWESH006" target="_blank">View on GitHub
+                            <a class="mcard__link" href="https://github.com/VISHWESH006" target="_blank" rel="noopener noreferrer">View on GitHub
                                 <i class="fa-brands fa-github"></i></a>
                         </div>
                     </div>
@@ -410,9 +441,9 @@
                 <h5>HAVE A PROJECT IN MIND?</h5>
                 <h1 class="big-talk">LET'S TALK</h1>
                 <div class="footer-buttons">
-                    <a href="https://github.com/VISHWESH006" target="_blank">GITHUB</a>
-                    <a href="https://www.linkedin.com/in/vishwesh-singh-274263330/" target="_blank">LINKEDIN</a>
-                    <a href="https://www.instagram.com/vishu__7905/" target="_blank">INSTAGRAM</a>
+                    <a href="https://github.com/VISHWESH006" target="_blank" rel="noopener noreferrer">GITHUB</a>
+                    <a href="https://www.linkedin.com/in/vishwesh-singh-274263330/" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+                    <a href="https://www.instagram.com/vishu__7905/" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
                 </div>
             </div>
             <div class="footer-bottom">
