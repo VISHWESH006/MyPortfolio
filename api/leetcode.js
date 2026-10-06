@@ -3,11 +3,7 @@ const https = require("https");
 const LEETCODE_GRAPHQL_URL = "https://leetcode.com/graphql";
 
 module.exports = async function handler(req, res) {
-    const allowedOrigins = ["https://vishweshsingh.com", "https://www.vishweshsingh.com"];
-    const origin = req.headers?.origin;
-    if (allowedOrigins.includes(origin)) {
-        res.setHeader("Access-Control-Allow-Origin", origin);
-    }
+    res.setHeader("Access-Control-Allow-Origin", "*");
 
     try {
         const { username } = req.query;
@@ -105,6 +101,7 @@ module.exports = async function handler(req, res) {
 
         res.setHeader("Cache-Control", "s-maxage=21600, stale-while-revalidate");
         return res.status(200).json({ stats });
+    } catch (e) {
         console.error("LeetCode API error:", e.message, e.stack);
         return res.status(500).json({ error: "Internal server error" });
     }
