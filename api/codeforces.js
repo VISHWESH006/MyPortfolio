@@ -23,7 +23,11 @@ function httpsGet(url, headers) {
 }
 
 module.exports = async function handler(req, res) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    const allowedOrigins = ["https://vishweshsingh.com", "https://www.vishweshsingh.com"];
+    const origin = req.headers?.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+    }
 
     try {
         const { endpoint, ...params } = req.query;
@@ -33,7 +37,16 @@ module.exports = async function handler(req, res) {
             return res.status(400).json({ error: "Invalid endpoint" });
         }
 
-        const qs = new URLSearchParams(params).toString();
+        // Whitelist allowed query parameters to prevent proxy abuse
+        const allowedParams = ["handle", "from", "count"];
+        const safeParams = {};
+        for (const key of allowedParams) {
+            if (params[key] !== undefined) {
+                safeParams[key] = String(params[key]).slice(0, 100);
+            }
+        }
+
+        const qs = new URLSearchParams(safeParams).toString();
         const url = `https://codeforces.com/api/${endpoint}?${qs}`;
 
         const { status, body } = await httpsGet(url);
@@ -52,7 +65,7 @@ module.exports = async function handler(req, res) {
         res.setHeader("Cache-Control", "s-maxage=21600, stale-while-revalidate");
         return res.status(200).json(data);
 
-    } catch (e) {
-        return res.status(500).json({ error: e.message, stack: e.stack });
+        console.error("Codeforces API error:", e.message, e.stack);
+        return res.status(500).json({ error: "Internal server error" });
     }
 };
